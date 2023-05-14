@@ -18,17 +18,42 @@ if errorlevel==2 set "slowInter=0"
 choice /c YN /M "Download apps? (Y/N)"
 if errorlevel==2 goto downloaduups
 echo Please wait...
-if "slowInter==1" aria2c -o %apps% "https://uupdump.net/findfiles.php?id=%id%&pack=neutral&edition=app&aria2=2" >> %log%&&aria2c -i %apps% -d %folder% >> %log%
-if "slowInter==0" aria2c -o %apps% "https://uupdump.net/get.php?id=%id%&pack=neutral&edition=app&aria2=2" >> %log%&&aria2c -i %apps% -d %folder% >> %log%
+if "slowInter==1" goto slowinternet-apps
+if "slowInter==0" normalinternet-apps
 echo Apps were downloaded. >> %log%
-echo Finished.
+echo Apps downloading finished.
 goto downloaduups
 
 :downloaduups
 echo Please wait...
-if "slowInter==1" aria2c -o %apps% "https://uupdump.net/findfiles.php?id=%id%&pack=%pack%&edition=%index%&aria2=2" >> %log%&&aria2c -i %apps% -d %folder% >> %log%
-if "slowInter==0" aria2c -o %apps% "https://uupdump.net/get.php?id=%id%&pack=%pack%&edition=%index%&aria2=2" >> %log%&&aria2c -i %apps% -d %folder% >> %log%
+if "slowInter==1" goto slowinternet-uups
+if "slowInter==0" goto normalinternet-uups
+
+
+:slowinternet-apps
+aria2c -o %apps% "https://uupdump.net/findfiles.php?id=%id%&pack=neutral&edition=app&aria2=2" >> %log%
+aria2c -i %apps% -d %folder% >> %log%
+goto downloaduups
+
+:normalinternet-apps
+aria2c -o %apps% "https://uupdump.net/get.php?id=%id%&pack=neutral&edition=app&aria2=2" >> %log%
+aria2c -i %apps% -d %folder% >> %log%
+goto downloaduups
+
+:slowinternet-uups
+aria2c -o %apps% "https://uupdump.net/findfiles.php?id=%id%&pack=%pack%&edition=%index%&aria2=2" >> %log%
+aria2c -i %apps% -d %folder% >> %log%
+goto finish
+
+:normalinternet-uups
+aria2c -o %apps% "https://uupdump.net/get.php?id=%id%&pack=%pack%&edition=%index%&aria2=2" >> %log%
+aria2c -i %apps% -d %folder% >> %log%
+goto finish
+
+:finish
 echo UUPs files finished downloading. >> %log%
-echo Finished.
+echo UUP downloading finished.
 pause
-exit
+goto EOF
+
+:EOF
