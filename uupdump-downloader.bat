@@ -13,21 +13,21 @@ echo Selected ID: %id% >> %log%
 echo Selected language: %pack% >> %log%
 echo Selected editions: %index% >> %log%
 choice /c YN /M "Slow Internet? (Y/N)"
-if errorlevel==1 set "slowInter=1"
-if errorlevel==2 set "slowInter=0"
+if errorlevel 1 set "slowInter=true"
+if errorlevel 2 set "slowInter=false"
 choice /c YN /M "Download apps? (Y/N)"
-if errorlevel==2 goto downloaduups
+if errorlevel 2 goto downloaduups
 echo Please wait...
-if "slowInter==1" goto slowinternet-apps
-if "slowInter==0" normalinternet-apps
+if "%slowInter%"=="true" goto :slowinternet-apps
+if "%slowInter%"=="false" goto :normalinternet-apps
 echo Apps were downloaded. >> %log%
 echo Apps downloading finished.
 goto downloaduups
 
 :downloaduups
 echo Please wait...
-if "slowInter==1" goto slowinternet-uups
-if "slowInter==0" goto normalinternet-uups
+if "%slowInter%"=="true" goto :slowinternet-uups
+if "%slowInter%"=="false" goto :normalinternet-uups
 
 
 :slowinternet-apps
