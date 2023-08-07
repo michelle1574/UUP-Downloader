@@ -41,13 +41,13 @@ aria2c -i %apps% -d %folder% >> %log%
 goto downloaduups
 
 :slowinternet-uups
-aria2c -o %apps% "https://uupdump.net/findfiles.php?id=%id%&pack=%pack%&edition=%index%&aria2=2" >> %log%
-aria2c -i %apps% -d %folder% >> %log%
+aria2c -o %uups% "https://uupdump.net/findfiles.php?id=%id%&pack=%pack%&edition=%index%&aria2=2" >> %log%
+aria2c -i %uups% -d %folder% >> %log%
 goto finish
 
 :normalinternet-uups
-aria2c -o %apps% "https://uupdump.net/get.php?id=%id%&pack=%pack%&edition=%index%&aria2=2" >> %log%
-aria2c -i %apps% -d %folder% >> %log%
+aria2c -o %uups% "https://uupdump.net/get.php?id=%id%&pack=%pack%&edition=%index%&aria2=2" >> %log%
+aria2c -i %uups% -d %folder% >> %log%
 goto finish
 
 :finish
